@@ -1,49 +1,31 @@
 open Ocaml_problems
+open Digest
 
-(* Test utilities *)
-let test_last_option =
-  Alcotest.testable (Fmt.option Fmt.int) (Option.equal Int.equal)
-
-let test_last_string_option =
-  Alcotest.testable (Fmt.option Fmt.string) (Option.equal String.equal)
-
-let test_last_bool_option =
-  Alcotest.testable (Fmt.option Fmt.bool) (Option.equal Bool.equal)
-
-(* Test cases for the last function *)
-let test_last_empty_list () =
-  Alcotest.(check test_last_option) "last of empty list" None (last [])
-
-let test_last_single_element () =
-  Alcotest.(check test_last_option) "last of single int" (Some 1) (last [ 1 ]);
-  Alcotest.(check test_last_string_option)
-    "last of single string" (Some "hello") (last [ "hello" ])
-
-let test_last_multiple_elements () =
-  Alcotest.(check test_last_option)
-    "last of multiple ints" (Some 3)
-    (last [ 1; 2; 3 ]);
-  Alcotest.(check test_last_string_option)
-    "last of multiple strings" (Some "c")
-    (last [ "a"; "b"; "c" ]);
-  Alcotest.(check test_last_bool_option)
-    "last of multiple bools" (Some false)
-    (last [ true; false; true; false ])
-
-let test_last_two_elements () =
-  Alcotest.(check test_last_option) "last of two ints" (Some 2) (last [ 1; 2 ]);
-  Alcotest.(check test_last_string_option)
-    "last of two strings" (Some "second")
-    (last [ "first"; "second" ])
-
-(* Test suite definition *)
-let last_tests =
+(* Create a list of module-hash pairs *)
+let problem_hashes =
   [
-    ("empty list", `Quick, test_last_empty_list);
-    ("single element", `Quick, test_last_single_element);
-    ("multiple elements", `Quick, test_last_multiple_elements);
-    ("two elements", `Quick, test_last_two_elements);
+    ( "Problem 1",
+      (module Problem1 : Problem),
+      "e1edf9d1967ca96767dcc2b2d6df69f4" );
+    (* Add more problems here as you create them *)
+    (* ("Problem2", (module Problem2 : Problem), "expected_hash_2"); *)
   ]
 
-(* Main test runner *)
-let () = Alcotest.run "OCaml Problems Tests" [ ("last function", last_tests) ]
+(* Generic test function *)
+let test_problem name problem_module expected_hash =
+  let module P = (val problem_module : Problem) in
+  let actual_hash = MD5.to_hex (MD5.string P.result) in
+  let error_msg = Printf.sprintf "%s hash (result: %s)" name P.result in
+  Alcotest.(check string) error_msg expected_hash actual_hash
+
+(* Generate tests for all problems *)
+let generate_tests () =
+  List.map
+    (fun (name, problem_module, expected_hash) ->
+      Alcotest.test_case name `Quick (fun () ->
+          test_problem name problem_module expected_hash))
+    problem_hashes
+
+let () =
+  let open Alcotest in
+  run "Problem Tests" [ ("hash_tests", generate_tests ()) ]

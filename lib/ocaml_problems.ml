@@ -1,8 +1,14 @@
-(* Tail of a list*)
-let rec last = function [] -> None | [ x ] -> Some x | _ :: t -> last t
+module type Problem = sig
+  val result : string
+end
 
-(* Last two elements of a list *)
-let rec last_two = function
-  | [] -> None
-  | [ x; y ] -> Some [ x; y ]
-  | _ :: t -> last_two t
+module Problem1 : Problem = struct
+  let rec generator n =
+    match n with
+    | 0 -> 0
+    | _ ->
+        let rest = generator (n - 1) in
+        if n mod 5 = 0 || n mod 3 = 0 then n + rest else rest
+
+  let result = string_of_int (generator 999)
+end
