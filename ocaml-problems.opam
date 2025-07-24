@@ -11,6 +11,8 @@ bug-reports: "https://github.com/marcopist/ocaml-problems/issues"
 depends: [
   "dune" {>= "3.19"}
   "ocaml"
+  "alcotest"
+  "fmt"
   "odoc" {with-doc}
 ]
 build: [
