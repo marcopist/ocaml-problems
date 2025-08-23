@@ -1,0 +1,15 @@
+{
+  "name": "OCaml Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/ocaml-opam:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ocamllabs.ocaml-platform"
+      ]
+    }
+  },
+  "postCreateCommand": "opam update && opam install . --deps-only --with-test"
+}

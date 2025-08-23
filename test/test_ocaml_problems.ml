@@ -7,8 +7,9 @@ let problem_hashes =
     ( "Problem 1",
       (module Problem1 : Problem),
       "e1edf9d1967ca96767dcc2b2d6df69f4" );
-    (* Add more problems here as you create them *)
-    (* ("Problem2", (module Problem2 : Problem), "expected_hash_2"); *)
+    ( "Problem 2",
+      (module Problem2 : Problem),
+      "4194eb91842c8e7e6df099ca73c38f28" );
   ]
 
 (* Generic test function *)
