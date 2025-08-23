@@ -7,7 +7,7 @@ module Problem1 : Problem = struct
   we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
   Find the sum of all the multiples of 3 or 5 below 1000. *)
-  let rec generator  = function
+  let rec generator = function
     | 0 -> 0
     | n ->
         let rest = generator (n - 1) in
@@ -26,12 +26,43 @@ module Problem2 : Problem = struct
    exceed four million, find the sum of the even-valued terms.*)
 
   let rec generator sum x1 x2 =
-    if x2 >= 4_000_000 then sum else
+    if x2 >= 4_000_000 then sum
+    else
       let new_sum = sum + if x2 mod 2 = 0 then x2 else 0 in
       generator new_sum x2 (x1 + x2)
 
   let result = generator 0 1 1 |> string_of_int
 end
 
+module Problem3 : Problem = struct
+  (*The prime factors of 13195 are 5, 7, 13 and 29.
+
+  What is the largest prime factor of the number 600851475143 ?*)
+
+  let number = 600851475143
+  let start = [ number ]
+
+  let intsq n = n |> float_of_int |> sqrt |> int_of_float
+
+  let rec factorise n k =
+    match k with
+    | 1 -> None
+    | _ -> if n mod k = 0 then Some (k, n / k) else factorise n (k-1)
+
+  let rec generator lst =
+    let sorted_list = List.rev @@ List.sort ( - ) lst in
+    match sorted_list with
+    | [] -> None
+    | m :: rest -> (
+        let fact_res = factorise m (intsq m) in
+        match fact_res with
+        | None -> Some m
+        | Some (f1, f2) -> generator (f1 :: f2 :: rest))
+
+  let result =
+    match generator start with
+    | None -> 0 |> string_of_int
+    | Some n -> n |> string_of_int
+end
 
 (* Various utils *)

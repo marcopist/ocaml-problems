@@ -10,6 +10,9 @@ let problem_hashes =
     ( "Problem 2",
       (module Problem2 : Problem),
       "4194eb91842c8e7e6df099ca73c38f28" );
+    ( "Problem 3",
+      (module Problem3 : Problem),
+      "94c4dd41f9dddce696557d3717d98d82" );
   ]
 
 (* Generic test function *)
@@ -29,4 +32,4 @@ let generate_tests () =
 
 let () =
   let open Alcotest in
-  run "Problem Tests" [ ("hash_tests", generate_tests ()) ]
+  run "ProblemTests" [ ("hash_tests", generate_tests ()) ]
