@@ -7,10 +7,9 @@ module Problem1 : Problem = struct
   we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
   Find the sum of all the multiples of 3 or 5 below 1000. *)
-  let rec generator n =
-    match n with
+  let rec generator  = function
     | 0 -> 0
-    | _ ->
+    | n ->
         let rest = generator (n - 1) in
         if n mod 5 = 0 || n mod 3 = 0 then n + rest else rest
 
@@ -26,8 +25,12 @@ module Problem2 : Problem = struct
    By considering the terms in the Fibonacci sequence whose values do not
    exceed four million, find the sum of the even-valued terms.*)
 
-  
-  let result = string_of_int 0
+  let rec generator sum x1 x2 =
+    if x2 >= 4_000_000 then sum else
+      let new_sum = sum + if x2 mod 2 = 0 then x2 else 0 in
+      generator new_sum x2 (x1 + x2)
+
+  let result = generator 0 1 1 |> string_of_int
 end
 
 
