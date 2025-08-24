@@ -1,3 +1,7 @@
 (test
  (name test_ocaml_problems)
  (libraries ocaml_problems alcotest fmt))
+
+(test
+ (name test_utils)
+ (libraries ocaml_problems utils alcotest fmt))

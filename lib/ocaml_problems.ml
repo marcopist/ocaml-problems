@@ -1,3 +1,5 @@
+open Utils
+
 module type Problem = sig
   val result : string
 end
@@ -41,13 +43,12 @@ module Problem3 : Problem = struct
 
   let number = 600851475143
   let start = [ number ]
-
   let intsq n = n |> float_of_int |> sqrt |> int_of_float
 
   let rec factorise n k =
     match k with
     | 1 -> None
-    | _ -> if n mod k = 0 then Some (k, n / k) else factorise n (k-1)
+    | _ -> if n mod k = 0 then Some (k, n / k) else factorise n (k - 1)
 
   let rec generator lst =
     let sorted_list = List.rev @@ List.sort ( - ) lst in
@@ -65,4 +66,28 @@ module Problem3 : Problem = struct
     | Some n -> n |> string_of_int
 end
 
-(* Various utils *)
+module Problem4 : Problem = struct
+  (*   A palindromic number reads the same both ways. The largest palindrome made
+   from the product of two 2-digit numbers is 9009 = 91 × 99.
+
+   Find the largest palindrome made from the product of two 3-digit numbers.*)
+
+  (* let rec get_combos n i =
+    match i with 0 -> [] | _ -> (n - i, n + i) :: get_combos n (i - 1)
+  (* TODO gives about twice too many *)
+
+  let rec answer n m =
+    let prod = 0 in
+
+    if is_palindrome @@ prod then prod
+    else max (answer (n - 1) m) (answer n (m - 1))
+  TODO This is unnecessarily slow *)
+
+  (* let rec answer n m =
+    let prod = n * m in
+
+    if is_palindrome @@ prod then prod
+    else max (answer (n - 1) m) (answer n (m - 1)) *)
+
+  let result = 0 |> string_of_int
+end
