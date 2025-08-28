@@ -1,4 +1,4 @@
-(* open Utils *)
+open Utils
 
 module type Problem = sig
   val result : string
@@ -72,22 +72,19 @@ module Problem4 : Problem = struct
 
    Find the largest palindrome made from the product of two 3-digit numbers.*)
 
-  (* let rec get_combos n i =
-    match i with 0 -> [] | _ -> (n - i, n + i) :: get_combos n (i - 1)
-  (* TODO gives about twice too many *)
+  let generator n m =
+    let rec aux sum max_seen =
+      match sum with
+      | 1 -> max_seen
+      | _ ->
+          let max_palindrome_prod =
+            List.init (max_seen / 2) (fun x -> x + 1)
+            |> List.map (fun x -> x * (sum - x))
+            |> List.filter is_palindrome |> List.fold_left max 1 |> max max_seen
+          in
+          max (aux (sum - 1) max_palindrome_prod) max_palindrome_prod
+    in
+    aux (n + m) 1
 
-  let rec answer n m =
-    let prod = 0 in
-
-    if is_palindrome @@ prod then prod
-    else max (answer (n - 1) m) (answer n (m - 1))
-  TODO This is unnecessarily slow *)
-
-  (* let rec answer n m =
-    let prod = n * m in
-
-    if is_palindrome @@ prod then prod
-    else max (answer (n - 1) m) (answer n (m - 1)) *)
-
-  let result = 0 |> string_of_int
+  let result = generator 999 999 |> string_of_int
 end

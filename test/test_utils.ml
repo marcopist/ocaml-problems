@@ -31,11 +31,7 @@ let test_is_palindrome () =
 
 let test_factorise_once () =
   check (option (pair int int)) "0 is factorized" None (Utils.factorise_once 0);
-  check
-    (option (pair int int))
-    "7 is prime"
-    (None)
-    (Utils.factorise_once 7);
+  check (option (pair int int)) "7 is prime" None (Utils.factorise_once 7);
   check
     (option (pair int int))
     "42 is factorized"
@@ -56,7 +52,8 @@ let test_prime_factorise () =
   check (list int) "prime factors of 7" [ 7 ] (Utils.prime_factorise 7);
   check (list int) "prime factors of 42" [ 2; 3; 7 ] (Utils.prime_factorise 42);
   check (list int) "prime factors of 123" [ 3; 41 ] (Utils.prime_factorise 123);
-  check (list int) "prime factors of 1001" [ 7; 11; 13 ] (Utils.prime_factorise 1001)
+  check (list int) "prime factors of 1001" [ 7; 11; 13 ]
+    (Utils.prime_factorise 1001)
 
 let () =
   run "Utils tests"
