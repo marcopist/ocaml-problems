@@ -72,29 +72,15 @@ module Problem4 : Problem = struct
 
    Find the largest palindrome made from the product of two 3-digit numbers.*)
 
-   (* Solution:
-      Partition all pairs of numbers their sum.
-      Come up with all (ordered) pairs that make up that sum.
-      Filter out pairs that contain numbers not in range.
-      Calculate product of all pairs.
-      Filter out non-palindrome products.
-      Take the maximum of palindrome products across this partition.
-      Return the maximum between this partition's max and the next partition's max.
-   *)
-  let max_palindrome_product_between n m =
-    let rec aux n m sum max_seen =
-      match sum with
-      | 1 -> max_seen
-      | _ ->
-          let max_palindrome_prod =
-            List.init (sum-1) (fun x -> x + 1)
-            |> List.map (fun x -> (x, sum - x))
-            |> List.filter (fun (x, y) -> (x > n && x <= m) && (y > n && y <= m) && x <= y)
-            |> List.map (fun (x, y) -> x * y)
-            |> List.filter is_palindrome |> List.fold_left max 1 |> max max_seen
-          in
-          max (aux n m (sum - 1) max_palindrome_prod) max_palindrome_prod
-    in
-    aux n m (n + m) 1
-  let result = max_palindrome_product_between 100 999 |> string_of_int
+  (* Solution: pure brute forcing, but making sure that no pair is computed more than once *)
+
+  let all_pairs_betwwen n m = cartesian (n -- m) (n -- m)
+
+  let result =
+    all_pairs_betwwen 100 999
+    |> List.filter (fun (a, b) -> a <= b)
+    |> List.map (fun (a, b) -> a * b)
+    |> List.filter is_palindrome |> List.fold_left max 0 |> string_of_int
+
 end
+

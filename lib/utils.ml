@@ -32,3 +32,10 @@ let rec prime_factorise n =
   match first_factorisation with
   | None -> [ n ]
   | Some (f1, prime_factor) -> prime_factor :: prime_factorise f1
+
+let ( -- ) a b =
+  let rec aux i acc = if i = a then i :: acc else aux (i - 1) (i :: acc) in
+  aux b []
+
+let cartesian l l' =
+  List.concat @@ List.map (fun e -> List.map (fun e' -> (e, e')) l') l
