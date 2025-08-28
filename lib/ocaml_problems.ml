@@ -67,24 +67,34 @@ module Problem3 : Problem = struct
 end
 
 module Problem4 : Problem = struct
-  (*   A palindromic number reads the same both ways. The largest palindrome made
+  (* A palindromic number reads the same both ways. The largest palindrome made
    from the product of two 2-digit numbers is 9009 = 91 × 99.
 
    Find the largest palindrome made from the product of two 3-digit numbers.*)
 
-  let generator n m =
-    let rec aux sum max_seen =
+   (* Solution:
+      Partition all pairs of numbers their sum.
+      Come up with all (ordered) pairs that make up that sum.
+      Filter out pairs that contain numbers not in range.
+      Calculate product of all pairs.
+      Filter out non-palindrome products.
+      Take the maximum of palindrome products across this partition.
+      Return the maximum between this partition's max and the next partition's max.
+   *)
+  let max_palindrome_product_between n m =
+    let rec aux n m sum max_seen =
       match sum with
       | 1 -> max_seen
       | _ ->
           let max_palindrome_prod =
-            List.init (max_seen / 2) (fun x -> x + 1)
-            |> List.map (fun x -> x * (sum - x))
+            List.init (sum-1) (fun x -> x + 1)
+            |> List.map (fun x -> (x, sum - x))
+            |> List.filter (fun (x, y) -> (x > n && x <= m) && (y > n && y <= m) && x <= y)
+            |> List.map (fun (x, y) -> x * y)
             |> List.filter is_palindrome |> List.fold_left max 1 |> max max_seen
           in
-          max (aux (sum - 1) max_palindrome_prod) max_palindrome_prod
+          max (aux n m (sum - 1) max_palindrome_prod) max_palindrome_prod
     in
-    aux (n + m) 1
-
-  let result = generator 999 999 |> string_of_int
+    aux n m (n + m) 1
+  let result = max_palindrome_product_between 100 999 |> string_of_int
 end
