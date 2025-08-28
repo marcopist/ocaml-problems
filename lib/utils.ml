@@ -11,12 +11,9 @@ let rec pow n exponent = if exponent = 0 then 1 else n * pow n (exponent - 1)
 let digit_at n pos = n / pow 10 (pos - 1) mod 10
 let last_digit n = n mod 10
 
-let rec is_palindrome n =
-  let _num_digits = num_digits n in
-  if _num_digits = 1 then true
-  else
-    digit_at n _num_digits = digit_at n 1
-    && is_palindrome (n mod pow 10 (_num_digits - 1) / 10)
+(* This is O(n) space and time. I'm aware there is an O(n/2) space solution. TODO: Implement it. *)
+let is_palindrome_list x = x = List.rev x
+let is_palindrome n = is_palindrome_list @@ digits n
 
 (* Returns (k, prime_factor) where prime_factor is the smallest prime factor of n and n = k * prime_factor *)
 let factorise_once n =

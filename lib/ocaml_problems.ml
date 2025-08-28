@@ -81,6 +81,14 @@ module Problem4 : Problem = struct
     |> List.filter (fun (a, b) -> a <= b)
     |> List.map (fun (a, b) -> a * b)
     |> List.filter is_palindrome |> List.fold_left max 0 |> string_of_int
-
 end
 
+module Problem5 : Problem = struct
+  (* 2520 is the smallest number that can be divided by each of the numbers
+   from 1 to 10 without any remainder.
+
+   What is the smallest positive number that is evenly divisible by all of
+   the numbers from 1 to 20? *)
+
+  let result = 0 |> string_of_int
+end

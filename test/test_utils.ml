@@ -27,7 +27,8 @@ let test_is_palindrome () =
   check bool "121 is palindrome" true (Utils.is_palindrome 121);
   check bool "12321 is palindrome" true (Utils.is_palindrome 12321);
   check bool "123 is not palindrome" false (Utils.is_palindrome 123);
-  check bool "10 is not palindrome" false (Utils.is_palindrome 10)
+  check bool "10 is not palindrome" false (Utils.is_palindrome 10);
+  check bool "900099 is not palindrome" false (Utils.is_palindrome 900099)
 
 let test_factorise_once () =
   check (option (pair int int)) "0 is factorized" None (Utils.factorise_once 0);
