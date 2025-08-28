@@ -36,3 +36,6 @@ let ( -- ) a b =
 
 let cartesian l l' =
   List.concat @@ List.map (fun e -> List.map (fun e' -> (e, e')) l') l
+
+let rec factorial = function 1 -> 1 | n -> n * factorial (n - 1)
+let rec choose n m = match m with 0 -> 1 | _ -> n * choose (n - 1) (m - 1) / m

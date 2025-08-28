@@ -16,6 +16,9 @@ let problem_hashes =
     ( "Problem 4",
       (module Problem4 : Problem),
       "d4cfc27d16ea72a96b83d9bdef6ce2ec" );
+    ( "Problem 15",
+      (module Problem15 : Problem),
+      "928f3957168ac592c4215dcd04e0b678" );
   ]
 
 (* Generic test function *)

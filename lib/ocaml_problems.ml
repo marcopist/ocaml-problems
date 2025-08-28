@@ -92,3 +92,9 @@ module Problem5 : Problem = struct
 
   let result = 0 |> string_of_int
 end
+
+module Problem15 : Problem = struct
+
+  let box_solution n = choose (n * 2) n
+  let result = box_solution 20 |> string_of_int
+end
