@@ -1,8 +1,4 @@
 (library
  (name ocaml_problems)
- (modules ocaml_problems)
- (libraries utils))
-
-(library
- (name utils)
- (modules utils))
+ (wrapped false)
+ (modules ocaml_problems digits utils))

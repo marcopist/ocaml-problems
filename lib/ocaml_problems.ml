@@ -1,5 +1,4 @@
 open Utils
-open Seq
 
 module type Problem = sig
   val result : string
@@ -130,4 +129,12 @@ module Problem15 : Problem = struct
 
   let box_solution n = choose (n * 2) n
   let result = box_solution 20 |> string_of_int
+end
+
+module Problem16 : Problem = struct
+  (* 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
+
+   What is the sum of the digits of the number 2^1000? *)
+
+  let result = 0 |> string_of_int
 end

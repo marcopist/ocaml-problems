@@ -4,4 +4,4 @@
 
 (test
  (name test_utils)
- (libraries ocaml_problems utils alcotest fmt))
+ (libraries ocaml_problems alcotest fmt))
