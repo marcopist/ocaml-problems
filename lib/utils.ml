@@ -1,3 +1,5 @@
+open Seq
+
 let rec digits n =
   let last_digit = n mod 10 in
   let div = n / 10 in
@@ -30,6 +32,19 @@ let rec prime_factorise n =
   | None -> [ n ]
   | Some (f1, prime_factor) -> prime_factor :: prime_factorise f1
 
+let rec multiplicity factor n =
+  if n mod factor = 0 then 1 + multiplicity factor (n / factor) else 0
+
+let rec count_factors n =
+  if n = 1 then 1
+  else
+    let first_factorisation = factorise_once n in
+    match first_factorisation with
+    | None -> 2 (* n is prime, so [1, n] *)
+    | Some (_f, prime_factor) ->
+        let m = multiplicity prime_factor n in
+        (m + 1) * count_factors (n / pow prime_factor m)
+
 let ( -- ) a b =
   let rec aux i acc = if i = a then i :: acc else aux (i - 1) (i :: acc) in
   aux b []
@@ -39,3 +54,4 @@ let cartesian l l' =
 
 let rec factorial = function 1 -> 1 | n -> n * factorial (n - 1)
 let rec choose n m = match m with 0 -> 1 | _ -> n * choose (n - 1) (m - 1) / m
+let triangle_numbers = scan ( + ) 1 (ints 2)

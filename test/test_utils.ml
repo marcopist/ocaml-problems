@@ -1,4 +1,5 @@
 open Alcotest
+open Seq
 
 let test_digits () =
   check (list int) "digits of 0" [ 0 ] (Utils.digits 0);
@@ -56,6 +57,18 @@ let test_prime_factorise () =
   check (list int) "prime factors of 1001" [ 7; 11; 13 ]
     (Utils.prime_factorise 1001)
 
+let test_triangle_numbers () =
+  check (list int) "first 10 triangle numbers"
+    [ 1; 3; 6; 10; 15; 21; 28; 36; 45; 55 ]
+    (List.of_seq @@ take 10 Utils.triangle_numbers)
+
+let test_count_factors () =
+  check int "factors of 2" 2 (Utils.count_factors 2);
+  check int "factors of 3" 2 (Utils.count_factors 3);
+  check int "factors of 6" 4 (Utils.count_factors 6);
+  check int "factors of 25" 3 (Utils.count_factors 25);
+  check int "factors of 28" 6 (Utils.count_factors 28)
+
 let () =
   run "Utils tests"
     [
@@ -67,4 +80,7 @@ let () =
         [ test_case "factorise_once" `Quick test_factorise_once ] );
       ( "prime_factorise",
         [ test_case "prime_factorise" `Quick test_prime_factorise ] );
+      ( "triangle_numbers",
+        [ test_case "triangle_numbers" `Quick test_triangle_numbers ] );
+      ("count_factors", [ test_case "count_factors" `Quick test_count_factors ]);
     ]
