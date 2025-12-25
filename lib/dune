@@ -1,4 +1,5 @@
 (library
  (name ocaml_problems)
  (wrapped false)
- (modules ocaml_problems digits utils))
+ (modules ocaml_problems digits utils ring)
+ (libraries core))

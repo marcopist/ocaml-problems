@@ -5,3 +5,7 @@
 (test
  (name test_utils)
  (libraries ocaml_problems alcotest fmt))
+
+(test
+ (name test_digits)
+ (libraries ocaml_problems alcotest qcheck qcheck-alcotest fmt))

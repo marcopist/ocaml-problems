@@ -1,6 +1,7 @@
 open Alcotest
 open Seq
 open Utils
+
 let test_digits () =
   check (list int) "digits of 0" [ 0 ] (digits 0);
   check (list int) "digits of 7" [ 7 ] (digits 7);
@@ -54,8 +55,7 @@ let test_prime_factorise () =
   check (list int) "prime factors of 7" [ 7 ] (prime_factorise 7);
   check (list int) "prime factors of 42" [ 2; 3; 7 ] (prime_factorise 42);
   check (list int) "prime factors of 123" [ 3; 41 ] (prime_factorise 123);
-  check (list int) "prime factors of 1001" [ 7; 11; 13 ]
-    (prime_factorise 1001)
+  check (list int) "prime factors of 1001" [ 7; 11; 13 ] (prime_factorise 1001)
 
 let test_triangle_numbers () =
   check (list int) "first 10 triangle numbers"

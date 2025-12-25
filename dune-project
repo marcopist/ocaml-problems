@@ -17,7 +17,7 @@
  (name ocaml-problems)
  (synopsis "OCaml Problems")
  (description "A collection of OCaml programming problems and solutions.")
- (depends ocaml alcotest fmt)
+ (depends ocaml alcotest qcheck qcheck-alcotest fmt core)
  (depopts)
  (allow_empty)
  (tags
