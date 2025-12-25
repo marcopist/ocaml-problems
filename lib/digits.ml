@@ -4,13 +4,15 @@ open Seq
 
 let sorry () = failwith "not implemented"
 
-type d = int list
+type d = bool * int list
 
 let of_int n =
   let rec aux acc n =
     if n < 10 then n :: acc else aux ((n mod 10) :: acc) (n / 10)
   in
-  aux [] n
+  match n >= 0 with
+  | true -> (true, aux [] n)
+  | false -> (false, aux [] (-n))
 
 let to_int d =
   let rec aux acc = function
