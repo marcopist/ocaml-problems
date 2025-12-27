@@ -136,5 +136,25 @@ module Problem16 : Problem = struct
 
    What is the sum of the digits of the number 2^1000? *)
 
-  let result = 0 |> string_of_int
+  open Core
+
+  let rec carry a =
+    match a with
+    | [] -> []
+    | [ a ] ->
+        let divisor = a / 10 in
+        if divisor = 0 then [ a ] else [ a mod 10; divisor ]
+    | a :: b :: rest -> (
+        let divisor = a / 10 in
+        match divisor with
+        | 0 -> a :: carry (b :: rest)
+        | x ->
+            let d = a mod 10 in
+            d :: (carry @@ ((b + x) :: rest)))
+
+  let rec pow2 = function
+    | 0 -> [ 1 ]
+    | n -> carry @@ List.map ~f:(( * ) 2) (pow2 (n - 1))
+
+  let result = pow2 1000 |> List.fold_left ~f:( + ) ~init:0 |> string_of_int
 end
