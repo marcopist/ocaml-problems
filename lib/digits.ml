@@ -1,43 +1,51 @@
 [@@@warning "-32-33"]
 
 open Seq
+open Core
 
 let sorry () = failwith "not implemented"
 
-type d = bool * int list
+type d = { positive : bool; digits : int list }
 
-let of_int n =
-  let rec aux acc n =
-    if n < 10 then n :: acc else aux ((n mod 10) :: acc) (n / 10)
-  in
-  match n >= 0 with
-  | true -> (true, aux [] n)
-  | false -> (false, aux [] (-n))
+let rec carry_one x =
+  if x = 0 then []
+  else
+    let divisor = x / 10 in
+    match divisor with 0 -> [ x ] | r -> carry_one r @ [ x mod 10 ]
 
-let to_int d =
-  let rec aux acc = function
-    | [] -> acc
-    | h :: t -> aux ((acc * 10) + h) t
-  in
-  aux 0 d
+let of_int (n : int) : d =
+  let positive = n >= 0 in
+  let abs = if positive then n else -n in
+  let digits = carry_one abs in
+  { positive; digits }
+
+let rec ipow a = function
+  | 0 -> 1
+  | 1 -> a
+  | n ->
+    let b = ipow a (n / 2) in
+    b * b * (if n mod 2 = 0 then 1 else a)
+
+let to_int (d: d) : int =
+  let abs = List.foldi d.digits ~init:0  ~f:(fun i acc x -> acc + (ipow i 10) * x ) in
+  if d.positive then abs else -abs
+
+let carry d =
+  let digits = match d.digits with
+  | [] -> []
+  | [0] -> []
+  | 
+  0
 
 let to_list d = d
 
-type order = Bigger | Equal | Smaller
-
 let compare a b =
-  match a - b with 0 -> Equal | _ -> if a > b then Bigger else Smaller
+  match a - b with
+  | 0 -> Ordering.Equal
+  | _ -> if a > b then Ordering.Greater else Ordering.Less
 
-let rec pad dig n =
-  if List.length dig >= n then dig
-  else pad (0 :: dig) n
-
-let sum d1 d2 =
-  let n = max (List.length d1) (List.length d2) in
-  let d1 = pad d1 n in
-  let d2 = pad d2 n in
-  List.map2 ( + ) d1 d2
-
+let rec pad dig n = if List.length dig >= n then dig else pad (0 :: dig) n
+let sum d1 d2 = []
 let scale s d = List.map (fun di -> di * s) d
 let shift d = 0 :: d
 let diff d1 d2 = sum d1 (scale (-1) d2)

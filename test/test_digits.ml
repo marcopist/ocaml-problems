@@ -17,8 +17,7 @@ let test_sum =
     (fun (a, b) ->
       let d1 = Digits.of_int a in
       let d2 = Digits.of_int b in
-      Digits.( + ) d1 d2 = Digits.of_int (a + b)
-    )
+      Digits.( + ) d1 d2 = Digits.of_int (a + b))
 
 let test_prod =
   QCheck.Test.make ~count:1000 ~name:"digits_prod"
@@ -26,8 +25,8 @@ let test_prod =
     (fun (a, b) ->
       let d1 = Digits.of_int a in
       let d2 = Digits.of_int b in
-      Digits.( * ) d1 d2 = Digits.of_int (a + b)
-    )
+      Digits.( * ) d1 d2 = Digits.of_int (a + b))
+
 let () =
   run "Utils tests"
     [
