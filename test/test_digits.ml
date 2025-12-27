@@ -3,7 +3,7 @@ open Alcotest
 let test_digits () =
   let open Digits in
   let split_digits x = to_list @@ of_int x in
-  check (list int) "digits of 0" [ 0 ] (split_digits 0);
+  check (list int) "digits of 0" [] (split_digits 0);
   check (list int) "digits of 21" [ 2; 1 ] (split_digits 21)
 
 let to_int_of_int_inverse =
@@ -25,7 +25,7 @@ let test_prod =
     (fun (a, b) ->
       let d1 = Digits.of_int a in
       let d2 = Digits.of_int b in
-      Digits.( * ) d1 d2 = Digits.of_int (a + b))
+      Digits.( * ) d1 d2 = Digits.of_int (a * b))
 
 let () =
   run "Utils tests"
