@@ -87,3 +87,17 @@ let pad digits1 digits2 =
 let rec unpad = function 0 :: rest -> unpad rest | x -> x
 let digits_sum d1 d2 = List.map2 ( + ) d1 d2 |> handle_carry
 let digs_times_number digs number = handle_carry @@ List.map (( * ) number) digs
+
+let rec carry a =
+  match a with
+  | [] -> []
+  | [ a ] ->
+      let divisor = a / 10 in
+      if divisor = 0 then [ a ] else (a mod 10) :: carry [ divisor ]
+  | a :: b :: rest -> (
+      let divisor = a / 10 in
+      match divisor with
+      | 0 -> a :: carry (b :: rest)
+      | x ->
+          let d = a mod 10 in
+          d :: (carry @@ ((b + x) :: rest)))

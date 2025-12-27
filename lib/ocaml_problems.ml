@@ -138,23 +138,27 @@ module Problem16 : Problem = struct
 
   open Core
 
-  let rec carry a =
-    match a with
-    | [] -> []
-    | [ a ] ->
-        let divisor = a / 10 in
-        if divisor = 0 then [ a ] else [ a mod 10; divisor ]
-    | a :: b :: rest -> (
-        let divisor = a / 10 in
-        match divisor with
-        | 0 -> a :: carry (b :: rest)
-        | x ->
-            let d = a mod 10 in
-            d :: (carry @@ ((b + x) :: rest)))
-
   let rec pow2 = function
     | 0 -> [ 1 ]
     | n -> carry @@ List.map ~f:(( * ) 2) (pow2 (n - 1))
 
   let result = pow2 1000 |> List.fold_left ~f:( + ) ~init:0 |> string_of_int
+end
+
+module Problem20 : Problem = struct
+  (*n! means n × (n − 1) × ... × 3 × 2 × 1
+
+   For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,
+   and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 =
+   27.
+
+   Find the sum of the digits in the number 100!*)
+
+  open Core
+
+  let rec fact = function
+    | 1 -> [ 1 ]
+    | n -> carry @@ List.map ~f:(( * ) n) (fact (n - 1))
+
+  let result = fact 100 |> List.fold_left ~f:( + ) ~init:0 |> string_of_int
 end
