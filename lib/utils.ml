@@ -56,38 +56,6 @@ let rec factorial = function 1 -> 1 | n -> n * factorial (n - 1)
 let rec choose n m = match m with 0 -> 1 | _ -> n * choose (n - 1) (m - 1) / m
 let triangle_numbers = scan ( + ) 1 (ints 2)
 
-let rec handle_carry digs =
-  let carry = List.map (fun x -> max (x - 9) 0) digs in
-  let shifted_carry = carry @ [ 0 ] in
-  match List.filter (fun x -> x > 0) carry with
-  | [] -> digs
-  | _ -> (
-      let padded_digs = 0 :: digs in
-      let handled_sum = List.map2 ( + ) padded_digs shifted_carry in
-      match handled_sum with
-      | 0 :: rest -> handle_carry rest
-      | _ -> handle_carry handled_sum)
-
-let pad digits1 digits2 =
-  let diff = List.length digits1 - List.length digits2 in
-
-  let list1 =
-    ([ 0 ] |> List.to_seq |> Seq.cycle |> Seq.take @@ max 0 diff |> List.of_seq)
-    @ digits1
-  in
-  let list2 =
-    ([ 0 ] |> List.to_seq |> Seq.cycle
-    |> Seq.take @@ max 0 (-diff)
-    |> List.of_seq)
-    @ digits2
-  in
-
-  (list1, list2)
-
-let rec unpad = function 0 :: rest -> unpad rest | x -> x
-let digits_sum d1 d2 = List.map2 ( + ) d1 d2 |> handle_carry
-let digs_times_number digs number = handle_carry @@ List.map (( * ) number) digs
-
 let rec carry a =
   match a with
   | [] -> []

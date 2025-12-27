@@ -162,3 +162,8 @@ module Problem20 : Problem = struct
 
   let result = fact 100 |> List.fold_left ~f:( + ) ~init:0 |> string_of_int
 end
+
+module ProblemX : Problem = struct
+
+  let result = "0"
+end
